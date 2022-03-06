@@ -1,0 +1,246 @@
+<html>
+
+<head>
+    <title>Virtual Lab | Apricus Academy</title>
+    <link rel="stylesheet" href="home.css">
+</head>
+
+<body>
+
+    <div class="container_outer">
+        <div class="container">
+            <!--Walls-->
+            <img src="vLab walls/main wall-01.svg" class="main_wall">
+            <img src="vLab walls/right wall-01.svg" class="right_wall">
+            <img src="vLab walls/left wall-01.svg" class="left_wall">
+            <img src = "vLab walls/floor-01.svg" class="floor">
+            <img src = "vLab walls/top-01.svg" class="top">
+            <img src="vLab walls/top-01.svg" class="back">
+
+            <!--Equipment-->
+            <div class="lab_stuff">
+                
+                <!--Holders-->
+                <img src="Lab equip/Holder- Multiple Empty-01.svg" class="holder_multiple_empty">
+                <img src="Lab equip/Holder- Single Empty -01.svg" class="holder_single_empty">
+                
+                <!--Test tubes-->
+                <img src="Lab equip/Test tube - Clear Blue-01.svg" class="tt_1">
+                <img src="Lab equip/Test Tube - Clear Orange-01.svg" class="tt_2">
+                <img src="Lab equip/Test tube - Clear Green-01.svg" class="tt_3">
+                
+                <!--Shelf equipment-->
+                <img src="Lab equip/Beaker HCl-01.svg" class="beaker1 beakers">
+                <img src="Lab equip/Beaker H2SO4-01.svg" class="beaker2 beakers">
+                <img src="Lab equip/Beaker HNO3-01.svg" class="beaker3 beakers">
+                <img src="Lab equip/Beaker HClO3.svg" class="beaker4 beakers">
+                <img src="Lab equip/Beaker CaCl2-01.svg" class="beaker5 beakers">
+                <img src="Lab equip/Beaker NaOH-01.svg" class="beaker6 beakers">
+                <img src="Lab equip/Beaker Ca(OH)2-01.svg" class="beaker7 beakers">
+                <img src="Lab equip/Beaker KOH-01.svg" class="beaker8 beakers">
+                <img src="Lab equip/Beaker Mg(OH)2-01.svg" class="beaker9 beakers">
+            </div>
+        </div>
+    </div>
+
+    <!--Movement directions-->
+    <div class="directions">
+        <div>W</div>
+        <span>A</span>
+        <span class="dirIndi">+</span>
+        <span>D</span>
+        <div>S</div>
+        <div>I</div>
+        <span>J</span>
+        <span class="dirIndi">Look Around</span>
+        <span>L</span>
+        <div>K</div>
+    </div>
+
+    <script>
+
+        //Setting lab stuff container height to main wall height
+        document.body.onload = function() {
+            document.querySelector(".lab_stuff").style.height = document.querySelector(".main_wall").offsetHeight + "px";
+        };
+
+        var table = document.querySelector(".table");
+        var beakers = document.getElementsByClassName("beakers");
+
+        document.body.addEventListener('keypress', move);
+        document.body.addEventListener('keyup', jump);
+
+        for (var i = 0; i < beakers.length; i++) {
+            beakers[i].addEventListener('click', holder_single);
+        }
+
+        //Setting test tube images
+        document.querySelector(".tt_1").style.content = 'url("Lab equip/Test tube - Clear Blue-01.svg")';
+        document.querySelector(".tt_2").style.content = 'url("Lab equip/Test Tube - Clear Orange-01.svg")';
+        document.querySelector(".tt_3").style.content = 'url("Lab equip/Test tube - Clear Green-01.svg")';
+
+        //Movement
+        var z = 0;
+        var x = 0;
+
+        //Look Around
+        var rotateY = 0;
+        var rotateX = 0;
+
+        var minZ = -700;
+        var maxZ = 600;
+        var maxX = 0.33*document.querySelector(".main_wall").offsetWidth;
+        var minX = -1*0.66*document.querySelector(".main_wall").offsetWidth;
+
+
+        //Test tube and holder animations
+        document.querySelector(".tt_1").addEventListener('click', tt1);
+        document.querySelector(".tt_2").addEventListener('click', tt2);
+        document.querySelector(".tt_3").addEventListener('click', tt3);
+
+        function holder_single() {
+            var holder = document.querySelector(".holder_single_empty");
+            holder.style.animation = "holder_single 0.7s normal forwards";
+            setTimeout(() => {
+                holder.style.content = 'url("Lab equip/Holder- single-01.svg")';
+                holder.style.animation = "none";
+            }, 700);
+        }
+
+        function tt1() {
+            if (this.style.content == 'url("Lab equip/Test tube - Clear Blue-01.svg")') {
+                this.style.animation = "tt1 0.7s normal forwards";
+                setTimeout(()=> {
+                    this.style.content = 'url("Lab equip/Test tubes - Blue-01.svg")';
+                    this.style.animation = "none";
+                    }, 700);
+            }
+            else {
+                this.style.animation = "tt1 0.7s reverse forwards";
+                setTimeout(() => {
+                    this.style.content = 'url("Lab equip/Test tube - Clear Blue-01.svg")';
+                    this.style.animation = "none";
+                }, 700);
+            }
+        }
+
+        function tt2() {
+            if (this.style.content == 'url("Lab equip/Test Tube - Clear Orange-01.svg")') {
+                this.style.animation = "tt2 0.7s normal forwards";
+                setTimeout(() => {
+                    this.style.content = 'url("Lab equip/Test tubes - Orange-01.svg")';
+                    this.style.animation = "none";
+                }, 700);
+            }
+            else {
+                this.style.animation = "tt2 0.7s reverse forwards";
+                setTimeout(() => {
+                    this.style.content = 'url("Lab equip/Test Tube - Clear Orange-01.svg")';
+                    this.style.animation = "none";
+                }, 700);
+            }
+        }
+
+        function tt3() {
+            if (this.style.content == 'url("Lab equip/Test tube - Clear Green-01.svg")') {
+                this.style.animation = "tt3 0.7s normal forwards";
+                setTimeout(() => {
+                    this.style.content = 'url("Lab equip/Test Tubes-Green-01.svg")';
+                    this.style.animation = "none";
+                }, 700);
+            }
+            else {
+                this.style.animation = "tt3 0.7s reverse forwards";
+                setTimeout(() => {
+                    this.style.content = 'url("Lab equip/Test tube - Clear Green-01.svg")';
+                    this.style.animation = "none";
+                }, 700);
+            }
+        }
+
+        //Movement and looking around
+
+        function move(e) {
+            document.querySelector(".container").style.transition = "0s";
+            //w
+            if (e.keyCode == 119) {
+                z = z + 5;
+            }
+            //s
+            else if (e.keyCode == 115) {
+                z = z - 5;
+            }
+            //a
+            else if (e.keyCode == 97) {
+                x = x + 5;
+            }
+            //d
+            else if (e.keyCode == 100) {
+                x = x - 5;
+            }
+            //up i
+            else if (e.keyCode == 105) {
+                rotateX += 1;
+            }
+            //down k
+            else if (e.keyCode == 107) {
+                rotateX -= 1;
+            }
+            //left j
+            else if (e.keyCode == 106) {
+                rotateY -= 1;
+            }
+            //right l
+            else if (e.keyCode == 108) {
+                rotateY += 1;
+            }
+
+            if (rotateY > 90) {
+                rotateY = 90;
+            }
+            else if (rotateY < -90) {
+                rotateY = -90;
+            }
+
+            if (rotateX > 90) {
+                rotateX = 90;
+            }
+            else if (rotateX < -90) {
+                rotateX = -90;
+            }
+
+            if (z > maxZ) {
+                z = maxZ;
+            }
+            else if (z < minZ) {
+                z = minZ;
+            }
+
+            if (x > maxX) {
+                x = maxX;
+            }
+            else if (x < minX) {
+                x = minX;
+            }
+            
+            document.querySelector(".container").style.transformOrigin = innerWidth / 2 - x + "px " + "50% " + (1000 - z) + "px";
+            document.querySelector(".container").style.transform = "translateZ(" + z + "px) translateX(" + x + "px)" + "rotateX(" + rotateX + "deg) " + "rotateY(" + rotateY + "deg)";
+        }
+
+        function jump(e) {
+            //spacebar              
+            if (e.keyCode == 32) {
+                //Jump
+                var up = 10;
+                document.querySelector(".container").style.transition = "0.6s";
+                document.querySelector(".container").style.transform = "translateZ(" + z + "px) translateX(" + x + "px)" + "rotateX(" + rotateX + "deg) " + "rotateY(" + rotateY + "deg)" + "translateY(" + up + "%)";
+                setTimeout(() => {
+                    document.querySelector(".container").style.transform = "translateZ(" + z + "px) translateX(" + x + "px)" + "rotateX(" + rotateX + "deg) " + "rotateY(" + rotateY + "deg)" + "translateY(0%)";
+                }, 600);
+            }
+        }
+
+    </script>
+</body>
+
+</html>

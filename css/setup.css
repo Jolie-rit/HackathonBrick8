@@ -1,0 +1,60 @@
+/* Global variables */
+:root {
+    --initial_distance: 1000px;
+    --back_wall_distance: 2000px;
+}
+
+body {
+    overflow: hidden;
+}
+
+/* Main CSS */
+.container_outer {
+    transform-style: preserve-3d;
+    perspective: var(--initial_distance); /* How far the user is from the object */
+    margin: 0;
+    height: 100vh;
+    width: 100vw;
+}
+
+.container {
+    transform-style: preserve-3d;
+    transform-origin: 50% 50% var(--initial_distance); /* Anchor point */
+    margin: 0;
+    height: 100vh;
+    width: 100vw;
+}
+
+.wall {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    width: 150%;
+    display: inline-block;
+}
+
+.wall1 {
+    transform: rotateY(90deg);
+    transform-origin: 100% 50% 0;
+}
+
+.wall2 {
+    transform: rotateY(-90deg);
+    transform-origin: 0% 50% 0;
+}
+
+.floor {
+    transform: rotateX(-90deg);
+    transform-origin: 50% 100% 0;
+}
+
+.top {
+    transform: rotateX(90deg);
+    transform-origin: 50% 0% 0;
+}
+
+.back {
+    transform: translateZ(var(--back_wall_distance));
+}
