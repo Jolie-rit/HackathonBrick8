@@ -3,14 +3,15 @@ const wall_width = document.querySelector(".wall").offsetWidth;
 document.querySelector(".back").style.transform = "translateZ(" + wall_width + "px)";
 document.querySelector(".container_outer").style.perspective = wall_width / 2 + "px";
 document.querySelector(".container").style.transformOrigin = "50% 50% " + wall_width / 2 + "px";
+document.querySelector(".teacher").style.transform = "translateZ(" + wall_width / 4 + "px)";
 
 //Movement
 
 // Constants for restraints
-const minZ = -700;
-const maxZ = 600;
-const maxX = 0.33 * document.querySelector(".wall").offsetWidth;
-const minX = -1 * 0.66 * document.querySelector(".wall").offsetWidth;
+const minZ = -0.45 * wall_width;
+const maxZ = 0.2 * wall_width;
+const maxX = 0.2 * document.querySelector(".wall").offsetWidth;
+const minX = -1 * 0.5 * document.querySelector(".wall").offsetWidth;
 
 // Position variables
 var z = 0;
@@ -26,7 +27,10 @@ const rotate_step = 1;
 var rotateY = 0;
 var rotateX = 0;
 
-document.body.addEventListener('keypress', move);
+// controlling teacher movement
+var rotateTeacher;
+
+document.body.addEventListener('keydown', move);
 document.body.addEventListener('keyup', jump);
 
 //Movement and looking around
@@ -44,7 +48,7 @@ function move(e) {
     }
 
     //w
-    if (e.keyCode == 119) {
+    if (e.keyCode == 119 || e.keyCode == 87 ) {
         newX = x + move_step * Math.cos(rotate_val * Math.PI / 180);
         newZ = z + move_step * Math.sin(rotate_val * Math.PI / 180);
 
@@ -54,7 +58,7 @@ function move(e) {
         }
     }
     //s
-    else if (e.keyCode == 115) {
+    else if (e.keyCode == 115 || e.keyCode == 83) {
         newX = x - move_step * Math.cos(rotate_val * Math.PI / 180);
         newZ = z - move_step * Math.sin(rotate_val * Math.PI / 180);
 
@@ -64,7 +68,7 @@ function move(e) {
         }
     }
     //a
-    else if (e.keyCode == 97) {
+    else if (e.keyCode == 97 || e.keyCode == 65) {
         newX = x + move_step * Math.sin(rotate_val * Math.PI / 180);
         newZ = z - move_step * Math.cos(rotate_val * Math.PI / 180);
 
@@ -74,40 +78,42 @@ function move(e) {
         }
     }
     //d
-    else if (e.keyCode == 100) {
+    else if (e.keyCode == 100 || e.keyCode == 68) {
         newX = x - move_step * Math.sin(rotate_val * Math.PI / 180);
-        newZ = z - move_step * Math.cos(rotate_val * Math.PI / 180);
+        newZ = z + move_step * Math.cos(rotate_val * Math.PI / 180);
 
         if (newX >= minX && newZ >= minZ) {
             x = newX;
             z = newZ;
         }
     }
-    //up i
-    else if (e.keyCode == 105) {
+    // up arrow
+    else if (e.keyCode == 38) {
         rotateX += rotate_step;
     }
-    //down k
-    else if (e.keyCode == 107) {
+    // down arrow
+    else if (e.keyCode == 40) {
         rotateX -= rotate_step;
     }
-    //left j
-    else if (e.keyCode == 106) {
+    // left arrow
+    else if (e.keyCode == 37) {
         rotateY -= rotate_step;
     }
-    //right l
-    else if (e.keyCode == 108) {
+    // right arrow
+    else if (e.keyCode == 39) {
         rotateY += rotate_step;
     }
     
     // Restraints - for safety
     
+    /*
     if (rotateY > 90) {
         rotateY = 90;
     }
     else if (rotateY < -90) {
         rotateY = -90;
     }
+    */
 
     if (rotateX > 90) {
         rotateX = 90;
@@ -129,10 +135,15 @@ function move(e) {
     else if (x < minX) {
         x = minX;
     }
+
+    rotateTeacher = Math.atan(-y/z) * 180 / Math.PI;
     
     
     document.querySelector(".container").style.transformOrigin = innerWidth / 2 - x + "px " + "50% " + (1000 - z) + "px"; // changing anchor point to current position
     document.querySelector(".container").style.transform = "translateZ(" + z + "px) translateX(" + x + "px)" + "rotateX(" + rotateX + "deg) " + "rotateY(" + rotateY + "deg)";
+    
+    
+    document.querySelector(".teacher").style.transform = "translateZ(" + wall_width / 4 + "px) rotateY(" + rotateTeacher + "deg)";
 }
 
 function jump(e) {

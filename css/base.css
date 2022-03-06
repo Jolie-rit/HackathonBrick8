@@ -2,6 +2,7 @@
 :root {
     --initial_distance: 1000px;
     --back_wall_distance: 2000px;
+    --wall_size: 150%;
 }
 
 body {
@@ -11,7 +12,6 @@ body {
 /* Main CSS */
 .container_outer {
     transform-style: preserve-3d;
-    perspective: var(--initial_distance); /* How far the user is from the object */
     margin: 0;
     height: 100vh;
     width: 100vw;
@@ -19,7 +19,6 @@ body {
 
 .container {
     transform-style: preserve-3d;
-    transform-origin: 50% 50% var(--initial_distance); /* Anchor point */
     margin: 0;
     height: 100vh;
     width: 100vw;
@@ -31,7 +30,7 @@ body {
     left: 0;
     margin: 0;
     padding: 0;
-    width: 150%;
+    width: var(--wall_size);
     display: inline-block;
 }
 
@@ -55,6 +54,14 @@ body {
     transform-origin: 50% 0% 0;
 }
 
-.back {
-    transform: translateZ(var(--back_wall_distance));
+/* Items */
+.objects {
+    width: var(--wall_size);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    transform-style: preserve-3d;
 }

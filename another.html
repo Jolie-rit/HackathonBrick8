@@ -9,7 +9,7 @@
 		</style>
 	</head>
 	<body>
-		<script src="js/three.js"></script>
+		
 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r126/three.min.js"></script>
 		<script src="https://unpkg.com/three@0.126.0/examples/js/loaders/GLTFLoader.js"></script>
@@ -27,7 +27,7 @@
 			const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
 			const loader = new THREE.GLTFLoader();
 
-loader.load( 'C:/Users/jolie/OneDrive/Desktop/Hackathon/hackathon35/images/desk.glb', function ( gltf ) {
+loader.load( 'uploads_files_2209172_Chair+and+school+desk.obj', function ( gltf ) {
 
 	scene.add( gltf.scene );
 
