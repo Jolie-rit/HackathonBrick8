@@ -1,4 +1,8 @@
-document.querySelector(".back").style.transform = "translateZ(" + document.querySelector(".wall").offsetWidth + "px)";
+const wall_width = document.querySelector(".wall").offsetWidth;
+
+document.querySelector(".back").style.transform = "translateZ(" + wall_width + "px)";
+document.querySelector(".container_outer").style.perspective = wall_width / 2 + "px";
+document.querySelector(".container").style.transformOrigin = "50% 50% " + wall_width / 2 + "px";
 
 //Movement
 
@@ -12,6 +16,9 @@ const minX = -1 * 0.66 * document.querySelector(".wall").offsetWidth;
 var z = 0;
 var x = 0;
 var y = 0;
+
+var newX;
+var newZ;
 const move_step = 5;
 const rotate_step = 1;
 
@@ -38,23 +45,43 @@ function move(e) {
 
     //w
     if (e.keyCode == 119) {
-        x += move_step * Math.cos(rotate_val * Math.PI / 180);
-        z += move_step * Math.sin(rotate_val * Math.PI / 180);
+        newX = x + move_step * Math.cos(rotate_val * Math.PI / 180);
+        newZ = z + move_step * Math.sin(rotate_val * Math.PI / 180);
+
+        if (newX <= maxX && newZ <= maxZ) {
+            x = newX;
+            z = newZ;
+        }
     }
     //s
     else if (e.keyCode == 115) {
-        x -= move_step * Math.cos(rotate_val * Math.PI / 180);
-        z -= move_step * Math.sin(rotate_val * Math.PI / 180);
+        newX = x - move_step * Math.cos(rotate_val * Math.PI / 180);
+        newZ = z - move_step * Math.sin(rotate_val * Math.PI / 180);
+
+        if (newX >= minX && newZ >= minZ) {
+            x = newX;
+            z = newZ;
+        }
     }
     //a
     else if (e.keyCode == 97) {
-        x += move_step * Math.sin(rotate_val * Math.PI / 180);
-        z -= move_step * Math.cos(rotate_val * Math.PI / 180);
+        newX = x + move_step * Math.sin(rotate_val * Math.PI / 180);
+        newZ = z - move_step * Math.cos(rotate_val * Math.PI / 180);
+
+        if (newX <= maxX && newZ >= minZ) {
+            x = newX;
+            z = newZ;
+        }
     }
     //d
     else if (e.keyCode == 100) {
-        x -= move_step * Math.sin(rotate_val * Math.PI / 180);
-        z += move_step * Math.cos(rotate_val * Math.PI / 180);
+        newX = x - move_step * Math.sin(rotate_val * Math.PI / 180);
+        newZ = z - move_step * Math.cos(rotate_val * Math.PI / 180);
+
+        if (newX >= minX && newZ >= minZ) {
+            x = newX;
+            z = newZ;
+        }
     }
     //up i
     else if (e.keyCode == 105) {
@@ -73,7 +100,7 @@ function move(e) {
         rotateY += rotate_step;
     }
     
-    // Restraints
+    // Restraints - for safety
     
     if (rotateY > 90) {
         rotateY = 90;
